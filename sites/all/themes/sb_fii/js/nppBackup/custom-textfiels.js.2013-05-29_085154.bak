@@ -1,0 +1,103 @@
+jQuery( document ).ready(function() {
+	if(jQuery("input#edit-submitted-phone-application-phone-type,input#edit-submitted-phone-application-contract-type,input#edit-submitted-phone-application-price").val() == "" ) {
+			jQuery("input#edit-submitted-phone-application-phone-type,input#edit-submitted-phone-application-contract-type,input#edit-submitted-phone-application-price,\
+			#webform-component-phone-application--contract-type label,\
+			#webform-component-phone-application label#edit-submitted-phone-application-price,\
+			#webform-component-phone-application--phone-type label,\
+			#webform-component-phone-application--price").hide();
+	}
+	else{
+	jQuery("#webform-component-phone-application--celphone-required").hide();
+	}
+
+});
+ function calcPmt( value ,interest, duration ) {
+
+int2 = interest/1200;
+int1 = 1+int2;
+r1 = Math.pow(int1, duration);
+ 
+pmt =( value*((int2*r1)/(r1-1)));
+
+    return Math.round(pmt*100)/100;
+
+}
+jQuery( document ).ready(function() {
+					jQuery("#edit-submitted-amount-required").empty();
+					 jQuery("#edit-submitted-amount-required").focus();
+
+				jQuery("#webform-client-form-46 .form-submit").click(function(e){ 
+			    if(jQuery("#edit-submitted-amount-required").val() == "" ) {
+					 e.preventDefault();
+					 alert("Please enter amount in rands required");
+					 
+	             }
+				 else if(jQuery("input#edit-submitted-duration").val() == "" ) {
+					 e.preventDefault();
+					 alert("Please enter the duration for repaying your loan");
+	             }
+				 else if(jQuery("input#edit-submitted-interest").val() == "" ) {
+					 e.preventDefault();
+					 alert("Please enter the interest value");
+	             }
+				 else{
+				  e.preventDefault(); 
+				  var value = jQuery("#edit-submitted-amount-required").val();
+				  var interest = jQuery("#edit-submitted-interest").val();
+				  var duration = jQuery("#edit-submitted-duration").val();
+
+
+				  var amt = calcPmt( value ,interest, duration );
+				  alert('Monthly repayment of '+ amt + ' for a period of ' + duration + ' months' ) ;
+				  
+				  return FALSE;
+				  }
+		});	
+	
+		
+	});
+jQuery( document ).ready(function() {
+jQuery("input").empty();
+//first slide for the required value;
+	jQuery( "#slider" ).slider({
+	  min: 100,
+      max: 30000,
+	  step:100,
+			slide: function( event, ui ) {
+				jQuery( "#edit-submitted-how-much-cash" ).val( "R" + ui.value );
+			}
+		});
+		
+	//second slide for the required value	
+		jQuery( "#slider1" ).slider({
+		 min: 1,
+         max: 1095,
+	     step:1,
+			slide: function( event, ui ) {
+
+				jQuery( "#edit-submitted-for-how-long" ).val( ui.value + " Days");
+			}
+		});
+
+jQuery("#calc_interest").click(function( event ) {
+	var value_money = $( "#edit-submitted-how-much-cash" ).slider( "value" );
+	var value_months  = $( "#edit-submitted-for-how-long" ).slider( "value");
+	var interest_rate= 0.12;
+	var interest = value_money * interest_rate * (value_months/12);  // borrowed money * rate * number of years 
+                
+
+			$("#edit-submitted-your-total-repay").val(interest) ;
+      });
+	  
+	  /*lets do the calcilations*/
+	   function calculate() {
+        var days = $("#days-value").val();
+        var amount = $(".loan-amount-value").val();
+        var percent = .10;
+        var interest = (days * amount * percent) / 10;
+        var total = parseInt(amount, 10) + parseInt(interest, 10);
+
+        $("#total-repay").val(total);
+        $("#interest-fees").val(interest);
+    };
+});

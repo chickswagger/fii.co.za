@@ -1,0 +1,57 @@
+jQuery( document ).ready(function() {
+	if(jQuery("input#edit-submitted-phone-application-phone-type,input#edit-submitted-phone-application-contract-type,input#edit-submitted-phone-application-price").val() == "" ) {
+			jQuery("input#edit-submitted-phone-application-phone-type,input#edit-submitted-phone-application-contract-type,input#edit-submitted-phone-application-price,\
+			#webform-component-phone-application--contract-type label,\
+			#webform-component-phone-application label#edit-submitted-phone-application-price,\
+			#webform-component-phone-application--phone-type label,\
+			#webform-component-phone-application--price").hide();
+	}
+	else{
+	jQuery("#webform-component-phone-application--celphone-required").hide();
+	}
+
+});
+ function calcPmt( value ,interest, duration ) {
+
+int2 = interest/1200;
+int1 = 1+int2;
+r1 = Math.pow(int1, duration);
+ 
+pmt =( value*((int2*r1)/(r1-1)));
+
+    return Math.round(pmt*100)/100;
+
+}
+jQuery( document ).ready(function() {
+jQuery("#edit-submitted-amount-required").empty();
+					 jQuery("#edit-submitted-amount-required").focus();
+
+	jQuery("#webform-client-form-46 .form-submit").click(function(e){ 
+			    if(jQuery("#edit-submitted-amount-required").val() == "" ) {
+					 e.preventDefault();
+					 alert("Please enter values");
+					 
+	             }
+				 else if(jQuery("input#edit-submitted-duration").val() == "" ) {
+					 e.preventDefault();
+					 alert("Please enter the duration for repaying your loan");
+	             }
+				 else if(jQuery("input#edit-submitted-interest").val() == "" ) {
+					 e.preventDefault();
+					 alert("Please enter the interest value");
+	             }
+				 else{
+				  e.preventDefault(); 
+				  var value = jQuery("#edit-submitted-amount-required").val();
+				  var interest = jQuery("#edit-submitted-interest").val();
+				  var duration = jQuery("#edit-submitted-duration").val();
+
+
+				  var amt = calcPmt( value ,interest, duration );
+				  alert('Monthly repayment of '+ amt + ' for a period of ' + duration + ' months' ) ;
+				  
+				  return FALSE;
+				  }
+		});
+		
+	});

@@ -1,0 +1,63 @@
+<!--calculator->
+//loan amount slider
+$(function() {
+
+    var inputValue = $(".loan-amount-value").val();
+
+    $(".loan-amount-slider").slider({
+        min: 100,
+        max: 500,
+        step: 1,
+        value: 200,
+        slide: function(event, ui) {
+            //update loan amount value when sliding loan amount slider 
+            $(".loan-amount-value").val(ui.value);
+        }
+    });
+    //show the loan amount initially
+    $(".loan-amount-value").val($(".loan-amount-slider").slider("value"));
+    //when the loan amount changes via user input.. 
+    $("#loan-amount-value").change(function(event) {
+        //change the slider to that amount    
+        $(".loan-amount-slider").slider("option", "value", inputValue);
+    })
+
+
+    //day slider
+    var dayInputValue = $("#days-value").val();
+
+    $(".days-slider").slider({
+        min: 1,
+        max: 45,
+        step: 1,
+        slide: function(event, ui) {
+
+            //update daye when sliding day slider 
+            $("#days-value").val(ui.value);
+            $(function() {
+                calculate();
+            });
+        }
+
+    });
+    //show the day initially
+    $("#days-value").val($(".days-slider").slider("value"));
+
+    //when the day via user input.. 
+    $("#days-value").change(function(event) {
+        //change the slider to that amount    
+        $(".days-slider").slider("option", "value", dayInputValue);
+    });
+
+    function calculate() {
+        var days = $("#days-value").val();
+        var amount = $(".loan-amount-value").val();
+        var percent = .10;
+        var interest = (days * amount * percent) / 10;
+        var total = parseInt(amount, 10) + parseInt(interest, 10);
+
+        $("#total-repay").val(total);
+        $("#interest-fees").val(interest);
+    };
+
+});
